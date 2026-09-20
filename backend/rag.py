@@ -2,7 +2,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from langchain_community.vectorstores import FAISS
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_groq import ChatGroq
 
 from langchain_core.prompts import ChatPromptTemplate
@@ -13,17 +13,14 @@ from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 
 load_dotenv()
 
-
-# Path to existing FAISS vector store
 BASE_DIR = Path(__file__).resolve().parent
 FAISS_PATH = BASE_DIR / "vectorstore" / "faiss_index"
 
 
-
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
+embeddings = HuggingFaceEndpointEmbeddings(
+    model="sentence-transformers/all-MiniLM-L6-v2",
+    task="feature-extraction"
 )
-
 
 
 vector_store = FAISS.load_local(
@@ -38,7 +35,6 @@ retriever = vector_store.as_retriever(
     search_type="similarity",
     search_kwargs={"k": 4}
 )
-
 
 
 def format_docs(docs):
@@ -72,14 +68,13 @@ Answer:
 """)
 
 
+
 llm = ChatGroq(
     model="openai/gpt-oss-120b"
 )
 
 
-
 parser = StrOutputParser()
-
 
 
 rag_chain = (

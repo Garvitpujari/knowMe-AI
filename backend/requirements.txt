@@ -5,7 +5,7 @@ langchain-community
 langchain-core
 langchain-huggingface
 langchain-groq
-sentence-transformers
+huggingface_hub
 faiss-cpu
 python-dotenv
 pydantic
