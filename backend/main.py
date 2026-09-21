@@ -10,7 +10,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://know-me-ai-qgcb.vercel.app"
+        "https://know-me-ai-qgcb.vercel.app",
+        "https://know-me-ai-qgcb-git-main-garvitpujaris-projects.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
